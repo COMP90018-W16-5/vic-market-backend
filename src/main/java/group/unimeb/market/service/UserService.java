@@ -32,4 +32,12 @@ public class UserService implements UserDetailsService {
         user.setAuthorities(Collections.singletonList(new SimpleGrantedAuthority("User")));
         return user;
     }
+
+    public void signUpUser(String email, String password, String displayName) {
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setDisplayName(displayName);
+        userDao.insert(user);
+    }
 }
