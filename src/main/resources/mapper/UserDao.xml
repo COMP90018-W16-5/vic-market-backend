@@ -6,9 +6,10 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="display_name" jdbcType="VARCHAR" property="displayName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
   <sql id="Base_Column_List">
-    `uid`, email, `password`, display_name
+    `uid`, email, `password`, `display_name`, `phone`
   </sql>
   <select id="selectByEmail" resultMap="BaseResultMap">
     select
@@ -27,9 +28,9 @@
     where `uid` = #{uid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="uid" keyProperty="uid" parameterType="group.unimeb.market.model.User" useGeneratedKeys="true">
-    insert into `user` (email, `password`, display_name
+    insert into `user` (email, `password`, `display_name`, `phone`
       )
-    values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{displayName,jdbcType=VARCHAR}
+    values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{displayName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="uid" keyProperty="uid" parameterType="group.unimeb.market.model.User" useGeneratedKeys="true">
@@ -44,6 +45,9 @@
       <if test="displayName != null">
         display_name,
       </if>
+      <if test="phone != null">
+        phone,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="email != null">
@@ -54,6 +58,9 @@
       </if>
       <if test="displayName != null">
         #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -69,6 +76,9 @@
       <if test="displayName != null">
         display_name = #{displayName,jdbcType=VARCHAR},
       </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
     </set>
     where `uid` = #{uid,jdbcType=INTEGER}
   </update>
@@ -77,6 +87,7 @@
     set email = #{email,jdbcType=VARCHAR},
       `password` = #{password,jdbcType=VARCHAR},
       display_name = #{displayName,jdbcType=VARCHAR}
+      phone = #{phone,jdbcType=VARCHAR}
     where `uid` = #{uid,jdbcType=INTEGER}
   </update>
 </mapper>

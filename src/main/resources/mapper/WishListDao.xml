@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group.unimeb.market.dao.WishListDao">
+  <resultMap id="BaseResultMap" type="group.unimeb.market.model.WishList">
+    <id column="wlid" jdbcType="INTEGER" property="wlid" />
+    <result column="user" jdbcType="INTEGER" property="user" />
+    <result column="item" jdbcType="INTEGER" property="item" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    wlid, `user`, item
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wish_list
+    where wlid = #{wlid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wish_list
+    where wlid = #{wlid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="wlid" keyProperty="wlid" parameterType="group.unimeb.market.model.WishList" useGeneratedKeys="true">
+    insert into wish_list (`user`, item)
+    values (#{user,jdbcType=INTEGER}, #{item,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="wlid" keyProperty="wlid" parameterType="group.unimeb.market.model.WishList" useGeneratedKeys="true">
+    insert into wish_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="user != null">
+        `user`,
+      </if>
+      <if test="item != null">
+        item,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="user != null">
+        #{user,jdbcType=INTEGER},
+      </if>
+      <if test="item != null">
+        #{item,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="group.unimeb.market.model.WishList">
+    update wish_list
+    <set>
+      <if test="user != null">
+        `user` = #{user,jdbcType=INTEGER},
+      </if>
+      <if test="item != null">
+        item = #{item,jdbcType=INTEGER},
+      </if>
+    </set>
+    where wlid = #{wlid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="group.unimeb.market.model.WishList">
+    update wish_list
+    set `user` = #{user,jdbcType=INTEGER},
+      item = #{item,jdbcType=INTEGER}
+    where wlid = #{wlid,jdbcType=INTEGER}
+  </update>
+</mapper>

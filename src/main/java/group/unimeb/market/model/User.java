@@ -1,5 +1,6 @@
 package group.unimeb.market.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,8 +11,10 @@ public class User implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
     private Integer uid;
     private String email;
+    @JsonIgnore
     private String password;
     private String displayName;
+    private String phone;
     private Collection<? extends GrantedAuthority> authorities;
 
     public static long getSerialVersionUID() {
