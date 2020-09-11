@@ -1,4 +1,4 @@
-package group.unimeb.market.dao;
+package group.unimeb.market.model;
 
 import java.io.Serializable;
 

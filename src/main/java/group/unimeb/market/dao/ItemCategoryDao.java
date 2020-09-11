@@ -1,6 +1,6 @@
 package group.unimeb.market.dao;
 
-import group.unimeb.market.dao.ItemCategory;
+import group.unimeb.market.model.ItemCategory;
 
 public interface ItemCategoryDao {
     int deleteByPrimaryKey(Integer icid);

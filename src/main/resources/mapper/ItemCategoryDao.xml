@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group.unimeb.market.dao.ItemCategoryDao">
-  <resultMap id="BaseResultMap" type="group.unimeb.market.dao.ItemCategory">
+  <resultMap id="BaseResultMap" type="group.unimeb.market.model.ItemCategory">
     <id column="icid" jdbcType="INTEGER" property="icid" />
     <result column="item" jdbcType="INTEGER" property="item" />
     <result column="cid" jdbcType="INTEGER" property="cid" />
@@ -19,11 +19,11 @@
     delete from item_category
     where icid = #{icid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="icid" keyProperty="icid" parameterType="group.unimeb.market.dao.ItemCategory" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="icid" keyProperty="icid" parameterType="group.unimeb.market.model.ItemCategory" useGeneratedKeys="true">
     insert into item_category (item, cid)
     values (#{item,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" keyColumn="icid" keyProperty="icid" parameterType="group.unimeb.market.dao.ItemCategory" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="icid" keyProperty="icid" parameterType="group.unimeb.market.model.ItemCategory" useGeneratedKeys="true">
     insert into item_category
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="item != null">
@@ -42,7 +42,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="group.unimeb.market.dao.ItemCategory">
+  <update id="updateByPrimaryKeySelective" parameterType="group.unimeb.market.model.ItemCategory">
     update item_category
     <set>
       <if test="item != null">
@@ -54,7 +54,7 @@
     </set>
     where icid = #{icid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="group.unimeb.market.dao.ItemCategory">
+  <update id="updateByPrimaryKey" parameterType="group.unimeb.market.model.ItemCategory">
     update item_category
     set item = #{item,jdbcType=INTEGER},
       cid = #{cid,jdbcType=INTEGER}
