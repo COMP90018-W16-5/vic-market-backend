@@ -2,12 +2,27 @@ package group.unimeb.market.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import group.unimeb.market.dao.ImageDao;
 import group.unimeb.market.dao.ItemDao;
 import group.unimeb.market.model.Item;
 import group.unimeb.market.model.PageResponseInfo;
+import group.unimeb.market.model.UploadResponse;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -18,6 +33,8 @@ import java.util.List;
 public class ItemService {
     @Resource
     private ItemDao itemDao;
+    @Resource
+    private ImageDao imageDao;
 
     public PageResponseInfo<List<Item>> getItemList(Integer page, Integer pageSize, Integer category) {
         if (page == null) {
@@ -39,5 +56,34 @@ public class ItemService {
         responseInfo.setHasNext(pageInfo.isHasNextPage());
         responseInfo.setHasPrevious(pageInfo.isHasPreviousPage());
         return responseInfo;
+    }
+
+    public String uploadFile(MultipartFile image) {
+        String url = "https://img.xieyangzhe.com/api.php";
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        String result = "";
+        try {
+            HttpPost httpPost = new HttpPost(url);
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+            builder.setCharset(StandardCharsets.UTF_8);
+            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            builder.addBinaryBody("upfile", image.getInputStream(), ContentType.MULTIPART_FORM_DATA,
+                    image.getOriginalFilename());
+            ContentType contentType = ContentType.create("application/json", StandardCharsets.UTF_8);
+            builder.addTextBody("token", "joseph");
+
+            HttpEntity entity = builder.build();
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity responseEntity = response.getEntity();
+            if (responseEntity != null) {
+                result = EntityUtils.toString(responseEntity, StandardCharsets.UTF_8);
+                UploadResponse resp = new Gson().fromJson(result, UploadResponse.class);
+                return resp.getUrl();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

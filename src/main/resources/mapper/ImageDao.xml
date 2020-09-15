@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group.unimeb.market.dao.ImageDao">
+  <resultMap id="BaseResultMap" type="group.unimeb.market.model.Image">
+    <id column="imid" jdbcType="INTEGER" property="imid" />
+    <result column="item" jdbcType="INTEGER" property="item" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    imid, item, url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from image
+    where imid = #{imid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from image
+    where imid = #{imid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="imid" keyProperty="imid" parameterType="group.unimeb.market.model.Image" useGeneratedKeys="true">
+    insert into image (item, url)
+    values (#{item,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="imid" keyProperty="imid" parameterType="group.unimeb.market.model.Image" useGeneratedKeys="true">
+    insert into image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="item != null">
+        item,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="item != null">
+        #{item,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="group.unimeb.market.model.Image">
+    update image
+    <set>
+      <if test="item != null">
+        item = #{item,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where imid = #{imid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="group.unimeb.market.model.Image">
+    update image
+    set item = #{item,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR}
+    where imid = #{imid,jdbcType=INTEGER}
+  </update>
+</mapper>
