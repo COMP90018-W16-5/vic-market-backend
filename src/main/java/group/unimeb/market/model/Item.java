@@ -1,30 +1,33 @@
 package group.unimeb.market.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * item
- * @author 
+ *
+ * @author
  */
 public class Item implements Serializable {
-    private Integer itemId;
-
-    private String title;
-
-    private String description;
-
-    private Double price;
-
-    private BigDecimal latitude;
-
-    private BigDecimal longitude;
-
-    private Integer seller;
-
-    private Integer status;
-
     private static final long serialVersionUID = 1L;
+    @ApiModelProperty(required = true, value = "Item id", dataType = "int", example = "1")
+    private Integer itemId;
+    @ApiModelProperty(required = true, value = "Item title", dataType = "String", example = "title")
+    private String title;
+    @ApiModelProperty(required = true, value = "Item description", dataType = "String", example = "description")
+    private String description;
+    @ApiModelProperty(required = true, value = "Item price", dataType = "double", example = "20.20")
+    private Double price;
+    @ApiModelProperty(required = true, value = "Item location latitude", dataType = "double", example = "37.8136")
+    private BigDecimal latitude;
+    @ApiModelProperty(required = true, value = "Item location longitude", dataType = "double", example = "144.9631")
+    private BigDecimal longitude;
+    @JsonIgnore
+    private Integer seller;
+    private Integer status;
 
     public Integer getItemId() {
         return itemId;

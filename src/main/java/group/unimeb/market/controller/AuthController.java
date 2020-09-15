@@ -1,15 +1,14 @@
 package group.unimeb.market.controller;
 
 import group.unimeb.market.model.ResponseInfo;
-import group.unimeb.market.model.User;
 import group.unimeb.market.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @RestController

@@ -119,4 +119,17 @@
       `status` = #{status,jdbcType=INTEGER}
     where item_id = #{itemId,jdbcType=INTEGER}
   </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from item
+  </select>
+  <select id="selectByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+        from `item`
+        left join `item_category` on `item`.`item_id` = `item_category`.`item`
+        left join `category` on `category`.`cid` = `item_category`.cid
+        where `category`.`cid` = #{category,jdbcType=INTEGER}
+  </select>
 </mapper>

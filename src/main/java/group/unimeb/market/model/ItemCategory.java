@@ -4,16 +4,14 @@ import java.io.Serializable;
 
 /**
  * item_category
- * @author 
+ *
+ * @author
  */
 public class ItemCategory implements Serializable {
-    private Integer icid;
-
-    private Integer item;
-
-    private Integer cid;
-
     private static final long serialVersionUID = 1L;
+    private Integer icid;
+    private Integer item;
+    private Integer cid;
 
     public Integer getIcid() {
         return icid;

@@ -3,6 +3,8 @@ package group.unimeb.market.dao;
 import group.unimeb.market.model.Item;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ItemDao {
     int deleteByPrimaryKey(Integer itemId);
@@ -16,4 +18,8 @@ public interface ItemDao {
     int updateByPrimaryKeySelective(Item record);
 
     int updateByPrimaryKey(Item record);
+
+    List<Item> selectAll();
+
+    List<Item> selectByCategory(int category);
 }

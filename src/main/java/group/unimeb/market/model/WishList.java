@@ -3,13 +3,14 @@ package group.unimeb.market.model;
 import java.io.Serializable;
 
 public class WishList implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Integer wlid;
-
     private Integer user;
-
     private Integer item;
 
-    private static final long serialVersionUID = 1L;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public Integer getWlid() {
         return wlid;
@@ -33,9 +34,5 @@ public class WishList implements Serializable {
 
     public void setItem(Integer item) {
         this.item = item;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 }

@@ -15,7 +15,7 @@ import java.util.Collections;
 @Service
 public class UserService implements UserDetailsService {
     @Resource
-    UserDao userDao;
+    private UserDao userDao;
 
     public User getCurrentUser() {
         String s = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -13,11 +13,11 @@ public class ResponseInfo<T> implements Serializable {
     public static final String MSG_SUCCESS_VALUE = "success";
     public static final String MSG_ERROR_VALUE = "unknown error";
 
-    @ApiModelProperty(required = true, value = "Response code", dataType = "int", example = "200", position = 0)
+    @ApiModelProperty(required = true, value = "Response code", example = "200", position = 0)
     private Integer code;
-    @ApiModelProperty(required = true, value = "Response message", dataType = "string", example = "success", position = 1)
+    @ApiModelProperty(required = true, value = "Response message", example = "success", position = 1)
     private String msg;
-    @ApiModelProperty(required = true, value = "Response data", dataType = "object", example = "data", position = 2)
+    @ApiModelProperty(required = true, value = "Response data", position = 2)
     private T data;
 
     public static <T> ResponseInfo<T> buildSuccess() {
