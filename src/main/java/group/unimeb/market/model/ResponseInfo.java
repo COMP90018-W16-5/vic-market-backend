@@ -1,41 +1,47 @@
 package group.unimeb.market.model;
 
 import com.google.gson.Gson;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
-public class ResponseInfo implements Serializable {
+@ApiModel(value = "Response data wrapper")
+public class ResponseInfo<T> implements Serializable {
     public static final Integer CODE_SUCCESS_VALUE = 200;
     public static final Integer CODE_ERROR_VALUE = 1000;
     public static final String MSG_SUCCESS_VALUE = "success";
-    public static final String MSG_ERROR_VALUE = "known error";
+    public static final String MSG_ERROR_VALUE = "unknown error";
 
+    @ApiModelProperty(required = true, value = "Response code", dataType = "int", example = "200", position = 0)
     private Integer code;
+    @ApiModelProperty(required = true, value = "Response message", dataType = "string", example = "success", position = 1)
     private String msg;
-    private Object data;
+    @ApiModelProperty(required = true, value = "Response data", dataType = "object", example = "data", position = 2)
+    private T data;
 
-    public static ResponseInfo buildSuccess() {
+    public static <T> ResponseInfo<T> buildSuccess() {
         return buildSuccess(null);
     }
 
-    public static ResponseInfo buildSuccess(Object data) {
+    public static <T> ResponseInfo<T> buildSuccess(T data) {
         return build(CODE_SUCCESS_VALUE, MSG_SUCCESS_VALUE, data);
     }
 
-    public static ResponseInfo buildFailure(Integer code, String msg) {
+    public static <T> ResponseInfo<T> buildFailure(Integer code, String msg) {
         return build(code, msg, null);
     }
 
-    public static ResponseInfo buildFailure(String msg) {
+    public static <T> ResponseInfo<T> buildFailure(String msg) {
         return build(CODE_ERROR_VALUE, msg, null);
     }
 
-    public static ResponseInfo buildFailure() {
+    public static <T> ResponseInfo<T> buildFailure() {
         return build(CODE_ERROR_VALUE, MSG_ERROR_VALUE, null);
     }
 
-    private static ResponseInfo build(Integer code, String msg, Object data) {
-        ResponseInfo responseInfo = new ResponseInfo();
+    private static <T> ResponseInfo<T> build(Integer code, String msg, T data) {
+        ResponseInfo<T> responseInfo = new ResponseInfo<>();
         responseInfo.setCode(code);
         responseInfo.setMsg(msg);
         if (data != null) {
@@ -60,13 +66,12 @@ public class ResponseInfo implements Serializable {
         this.msg = msg;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public ResponseInfo setData(Object data) {
+    public void setData(T data) {
         this.data = data;
-        return this;
     }
 
     @Override
