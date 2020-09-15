@@ -1,12 +1,14 @@
 package group.unimeb.market.controller;
 
+import group.unimeb.market.model.Item;
+import group.unimeb.market.model.ItemDTO;
 import group.unimeb.market.model.ResponseInfo;
+import group.unimeb.market.model.User;
+import group.unimeb.market.service.ItemService;
 import group.unimeb.market.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -16,10 +18,14 @@ import javax.annotation.Resource;
 public class UserController {
     @Resource
     private UserService userService;
+    @Resource
+    private ItemService itemService;
 
     @ApiOperation("Post a item")
     @PostMapping(value = "/post", produces = "application/json")
-    public ResponseInfo postItem() {
+    public ResponseInfo postItem(@RequestBody @ApiParam(value = "Created a post", required = true)ItemDTO item) {
+        User user = userService.getCurrentUser();
+        itemService.createItem(user, item);
         return ResponseInfo.buildSuccess();
     }
 

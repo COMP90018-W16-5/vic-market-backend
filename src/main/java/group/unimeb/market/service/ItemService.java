@@ -5,9 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import group.unimeb.market.dao.ImageDao;
 import group.unimeb.market.dao.ItemDao;
-import group.unimeb.market.model.Item;
-import group.unimeb.market.model.PageResponseInfo;
-import group.unimeb.market.model.UploadResponse;
+import group.unimeb.market.model.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -85,5 +83,20 @@ public class ItemService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void createItem(User user, ItemDTO item) {
+        Item newItem = new Item();
+        newItem.setTitle(item.getTitle());
+        newItem.setDescription(item.getDescription());
+        newItem.setLatitude(item.getLatitude());
+        newItem.setLongitude(item.getLongitude());
+        newItem.setPrice(item.getPrice());
+        newItem.setSeller(user.getUid());
+        newItem.setStatus(0);
+        itemDao.insert(newItem);
+        for (String url : item.getImages()) {
+            imageDao.insert(new Image(null, newItem.getItemId(), url));
+        }
     }
 }

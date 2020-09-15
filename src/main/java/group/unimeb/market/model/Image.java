@@ -7,4 +7,10 @@ public class Image implements Serializable {
     private Integer imid;
     private Integer item;
     private String url;
+
+    public Image(Integer imid, Integer item, String url) {
+        this.imid = imid;
+        this.item = item;
+        this.url = url;
+    }
 }
