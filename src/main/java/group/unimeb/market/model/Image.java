@@ -13,6 +13,9 @@ public class Image {
     @ApiModelProperty(required = true, value = "Image URL", dataType = "String", example = "https://url/img.png")
     private String url;
 
+    public Image() {
+    }
+
     public Image(Integer item, String url) {
         this.item = item;
         this.url = url;

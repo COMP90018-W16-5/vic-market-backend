@@ -33,11 +33,13 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public void signUpUser(String email, String password, String displayName) {
+    public void signUpUser(String email, String password, String displayName, String phone, String photo) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
         user.setDisplayName(displayName);
+        user.setPhone(phone);
+        user.setPhoto(photo);
         userDao.insert(user);
     }
 }

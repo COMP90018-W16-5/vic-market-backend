@@ -24,6 +24,7 @@
       <result column="email" jdbcType="VARCHAR" property="email" />
       <result column="display_name" jdbcType="VARCHAR" property="displayName" />
       <result column="phone" jdbcType="VARCHAR" property="phone" />
+      <result column="photo" jdbcType="VARCHAR" property="photo" />
     </association>
     <collection property="urls" ofType="group.unimeb.market.model.Image">
       <id column="imid" jdbcType="INTEGER" property="imid" />
@@ -34,6 +35,7 @@
       <result column="name" jdbcType="VARCHAR" property="name" />
     </collection>
   </resultMap>
+
   <sql id="Base_Column_List">
     item_id, title, description, price, latitude, longitude, seller, `status`
   </sql>

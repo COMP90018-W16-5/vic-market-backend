@@ -25,7 +25,7 @@ public class UserController {
 
     @ApiOperation("Post a item")
     @PostMapping(value = "/post", produces = "application/json")
-    public ResponseInfo postItem(@RequestBody @ApiParam(value = "Created a post", required = true)ItemDTO item) {
+    public ResponseInfo<?> postItem(@RequestBody @ApiParam(value = "Created a post", required = true)ItemDTO item) {
         User user = userService.getCurrentUser();
         itemService.createItem(user, item);
         return ResponseInfo.buildSuccess();
@@ -33,7 +33,7 @@ public class UserController {
 
     @ApiOperation("Add wishlist item")
     @PostMapping(value = "/wishlist", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseInfo addWishlist(@ApiParam(value = "Item id", required = true) @RequestParam Integer itemId) {
+    public ResponseInfo<?> addWishlist(@ApiParam(value = "Item id", required = true) @RequestParam Integer itemId) {
         User user = userService.getCurrentUser();
         WishList wishList = new WishList(user.getUid(), itemId);
         wishlistService.addWishlistItem(wishList);
@@ -42,7 +42,7 @@ public class UserController {
 
     @ApiOperation("Delete wishlist item")
     @DeleteMapping(value = "/wishlist", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseInfo deleteWishlist(@ApiParam(value = "Item id", required = true) @RequestParam Integer itemId) {
+    public ResponseInfo<?> deleteWishlist(@ApiParam(value = "Item id", required = true) @RequestParam Integer itemId) {
         User user = userService.getCurrentUser();
         WishList wishList = new WishList(user.getUid(), itemId);
         wishlistService.removeWishlistItem(wishList);
