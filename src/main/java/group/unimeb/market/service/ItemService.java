@@ -96,7 +96,11 @@ public class ItemService {
         newItem.setStatus(0);
         itemDao.insert(newItem);
         for (String url : item.getImages()) {
-            imageDao.insert(new Image(null, newItem.getItemId(), url));
+            imageDao.insert(new Image(newItem.getItemId(), url));
         }
+    }
+
+    public DetailItem getItemDetail(Integer itemId) {
+        return itemDao.selectDetailItem(itemId);
     }
 }

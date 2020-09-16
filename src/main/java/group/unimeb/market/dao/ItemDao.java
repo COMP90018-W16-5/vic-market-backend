@@ -1,5 +1,6 @@
 package group.unimeb.market.dao;
 
+import group.unimeb.market.model.DetailItem;
 import group.unimeb.market.model.Item;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,5 +22,9 @@ public interface ItemDao {
 
     List<Item> selectAll();
 
+    List<Item> selectWishlistByUser(Integer uid);
+
     List<Item> selectByCategory(int category);
+
+    DetailItem selectDetailItem(Integer itemId);
 }

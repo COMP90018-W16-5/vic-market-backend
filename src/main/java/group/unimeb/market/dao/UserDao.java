@@ -9,8 +9,6 @@ public interface UserDao {
 
     int insert(User record);
 
-    int insertSelective(User record);
-
     User selectByPrimaryKey(Integer uid);
 
     int updateByPrimaryKeySelective(User record);

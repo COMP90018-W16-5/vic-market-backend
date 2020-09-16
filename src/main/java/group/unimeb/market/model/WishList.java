@@ -8,6 +8,11 @@ public class WishList implements Serializable {
     private Integer user;
     private Integer item;
 
+    public WishList(Integer user, Integer item) {
+        this.user = user;
+        this.item = item;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

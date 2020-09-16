@@ -7,9 +7,10 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="display_name" jdbcType="VARCHAR" property="displayName" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="photo" jdbcType="VARCHAR" property="photo" />
   </resultMap>
   <sql id="Base_Column_List">
-    `uid`, email, `password`, `display_name`, `phone`
+    `uid`, email, `password`, `display_name`, `phone`, `photo`
   </sql>
   <select id="selectByEmail" resultMap="BaseResultMap">
     select
@@ -28,42 +29,12 @@
     where `uid` = #{uid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="uid" keyProperty="uid" parameterType="group.unimeb.market.model.User" useGeneratedKeys="true">
-    insert into `user` (email, `password`, `display_name`, `phone`
+    insert into `user` (email, `password`, `display_name`, `phone`, `photo`
       )
-    values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{displayName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
+    values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{displayName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="uid" keyProperty="uid" parameterType="group.unimeb.market.model.User" useGeneratedKeys="true">
-    insert into `user`
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="email != null">
-        email,
-      </if>
-      <if test="password != null">
-        `password`,
-      </if>
-      <if test="displayName != null">
-        display_name,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="displayName != null">
-        #{displayName,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="group.unimeb.market.model.User">
     update user
     <set>
@@ -79,6 +50,9 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="photo != null">
+        phone = #{photo,jdbcType=VARCHAR},
+      </if>
     </set>
     where `uid` = #{uid,jdbcType=INTEGER}
   </update>
@@ -88,6 +62,7 @@
       `password` = #{password,jdbcType=VARCHAR},
       display_name = #{displayName,jdbcType=VARCHAR}
       phone = #{phone,jdbcType=VARCHAR}
+      photo = #{photo,jdbcType=VARCHAR}
     where `uid` = #{uid,jdbcType=INTEGER}
   </update>
 </mapper>

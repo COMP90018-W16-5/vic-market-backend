@@ -1,5 +1,7 @@
 package group.unimeb.market.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -7,9 +9,10 @@ import java.io.Serializable;
  *
  * @author
  */
-public class Category implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Category {
+    @ApiModelProperty(required = true, value = "Category id", dataType = "int", example = "1")
     private Integer cid;
+    @ApiModelProperty(required = true, value = "Category name", dataType = "int", example = "Smart phone")
     private String name;
 
     public Integer getCid() {

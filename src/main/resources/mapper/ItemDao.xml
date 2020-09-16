@@ -11,6 +11,29 @@
     <result column="seller" jdbcType="INTEGER" property="seller" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+  <resultMap id="DetailResultMap" type="group.unimeb.market.model.DetailItem">
+    <id column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="latitude" jdbcType="DECIMAL" property="latitude" />
+    <result column="longitude" jdbcType="DECIMAL" property="longitude" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <association property="seller" javaType="group.unimeb.market.model.User">
+      <id column="uid" jdbcType="INTEGER" property="uid" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="display_name" jdbcType="VARCHAR" property="displayName" />
+      <result column="phone" jdbcType="VARCHAR" property="phone" />
+    </association>
+    <collection property="urls" ofType="group.unimeb.market.model.Image">
+      <id column="imid" jdbcType="INTEGER" property="imid" />
+      <result column="url" property="url" jdbcType="VARCHAR"/>
+    </collection>
+    <collection property="categories" ofType="group.unimeb.market.model.Category">
+      <id column="cid" jdbcType="INTEGER" property="cid" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+    </collection>
+  </resultMap>
   <sql id="Base_Column_List">
     item_id, title, description, price, latitude, longitude, seller, `status`
   </sql>
@@ -19,6 +42,14 @@
     <include refid="Base_Column_List" />
     from item
     where item_id = #{itemId,jdbcType=INTEGER}
+  </select>
+  <select id="selectWishlistByUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from item
+    join wish_list on wish_list.item = item.item_id
+    join `user` on `user`.uid = wish_list.user
+    where `user`.uid = #{uid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from item
@@ -131,5 +162,13 @@
         left join `item_category` on `item`.`item_id` = `item_category`.`item`
         left join `category` on `category`.`cid` = `item_category`.cid
         where `category`.`cid` = #{category,jdbcType=INTEGER}
+  </select>
+  <select id="selectDetailItem" parameterType="java.lang.Integer" resultMap="DetailResultMap">
+    select * from item
+      left join `user` on item.seller = `user`.`uid`
+      left join `image` on item.item_id = image.item
+      left join item_category on item.item_id = item_category.item
+      left join category on item_category.cid = category.cid
+      where item.item_id = #{itemId,jdbcType=INTEGER}
   </select>
 </mapper>

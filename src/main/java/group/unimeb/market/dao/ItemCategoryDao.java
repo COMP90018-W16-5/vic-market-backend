@@ -1,7 +1,9 @@
 package group.unimeb.market.dao;
 
 import group.unimeb.market.model.ItemCategory;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface ItemCategoryDao {
     int deleteByPrimaryKey(Integer icid);
 

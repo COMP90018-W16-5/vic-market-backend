@@ -19,6 +19,10 @@
     delete from wish_list
     where wlid = #{wlid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteWishlist" parameterType="group.unimeb.market.model.WishList">
+    delete from wish_list
+    where `user` = #{user,jdbcType=INTEGER} and `item` = #{item,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" keyColumn="wlid" keyProperty="wlid" parameterType="group.unimeb.market.model.WishList" useGeneratedKeys="true">
     insert into wish_list (`user`, item)
     values (#{user,jdbcType=INTEGER}, #{item,jdbcType=INTEGER})
