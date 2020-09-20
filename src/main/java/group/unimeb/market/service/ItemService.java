@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import group.unimeb.market.dao.ImageDao;
+import group.unimeb.market.dao.ItemCategoryDao;
 import group.unimeb.market.dao.ItemDao;
 import group.unimeb.market.model.*;
 import org.apache.http.HttpEntity;
@@ -33,6 +34,8 @@ public class ItemService {
     private ItemDao itemDao;
     @Resource
     private ImageDao imageDao;
+    @Resource
+    private ItemCategoryDao itemCategoryDao;
 
     public PageResponseInfo<List<Item>> getItemList(Integer page, Integer pageSize, Integer category) {
         if (page == null) {
@@ -97,6 +100,10 @@ public class ItemService {
         itemDao.insert(newItem);
         for (String url : item.getImages()) {
             imageDao.insert(new Image(newItem.getItemId(), url));
+        }
+        for (Integer category: item.getCategories()) {
+            ItemCategory itemCategory = new ItemCategory(null, newItem.getItemId(), category);
+            itemCategoryDao.insert(itemCategory);
         }
     }
 

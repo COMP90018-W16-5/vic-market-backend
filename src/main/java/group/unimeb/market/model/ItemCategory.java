@@ -36,4 +36,13 @@ public class ItemCategory implements Serializable {
     public void setCid(Integer cid) {
         this.cid = cid;
     }
+
+    public ItemCategory(Integer icid, Integer item, Integer cid) {
+        this.icid = icid;
+        this.item = item;
+        this.cid = cid;
+    }
+
+    public ItemCategory() {
+    }
 }

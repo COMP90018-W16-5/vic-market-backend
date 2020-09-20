@@ -22,6 +22,8 @@ public class ItemDTO {
     private BigDecimal longitude;
     @ApiModelProperty(required = true, value = "Image urls", dataType = "list", example = "[\"https://url/image1.png\",\"https://url/image2.png\"]")
     private List<String> images;
+    @ApiModelProperty(required = true, value = "Category ids", dataType = "list", example = "[1, 2, 3]")
+    private List<Integer> categories;
 
     public String getTitle() {
         return title;
@@ -69,5 +71,13 @@ public class ItemDTO {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public List<Integer> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Integer> categories) {
+        this.categories = categories;
     }
 }
