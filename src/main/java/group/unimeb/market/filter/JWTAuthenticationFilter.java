@@ -62,6 +62,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         responseData.put("uid", user.getUid());
         responseData.put("email", user.getEmail());
         responseData.put("displayName", user.getDisplayName());
+        responseData.put("phone", user.getPhone());
+        responseData.put("photo", user.getPhoto());
 
         response.getWriter().write(new Gson().toJson(ResponseInfo.buildSuccess(responseData)));
     }

@@ -8,8 +8,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -55,5 +57,20 @@ public class UserController {
                                     @ApiParam(value = "Number of item per page", required = true) @RequestParam Integer pageSize) {
         User user = userService.getCurrentUser();
         return wishlistService.getWishlist(page, pageSize, user.getUid());
+    }
+
+    @ApiOperation(value = "Upload images")
+    @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseInfo<List<ImageUrlModel>> uploadImage(@RequestPart("images") MultipartFile[] images) {
+        List<ImageUrlModel> result = new ArrayList<>();
+        int seq = 0;
+        for (MultipartFile image : images) {
+            String url = itemService.uploadFile(image);
+            if (url == null || "".equals(url)) {
+                continue;
+            }
+            result.add(new ImageUrlModel(++seq, url));
+        }
+        return ResponseInfo.buildSuccess(result);
     }
 }

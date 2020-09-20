@@ -26,21 +26,6 @@ public class ItemController {
         return itemService.getItemList(page, pageSize, category);
     }
 
-    @ApiOperation(value = "Upload images")
-    @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseInfo<List<ImageUrlModel>> uploadImage(@RequestPart("images") MultipartFile[] images) {
-        List<ImageUrlModel> result = new ArrayList<>();
-        int seq = 0;
-        for (MultipartFile image : images) {
-            String url = itemService.uploadFile(image);
-            if (url == null || "".equals(url)) {
-                continue;
-            }
-            result.add(new ImageUrlModel(++seq, url));
-        }
-        return ResponseInfo.buildSuccess(result);
-    }
-
     @ApiOperation("Get item detail")
     @GetMapping(value = "/detail", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseInfo<DetailItem> getItemDetail(@ApiParam(value = "Item id", required = true) @RequestParam("id") Integer id) {
