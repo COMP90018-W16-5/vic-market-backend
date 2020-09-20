@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * item
@@ -25,6 +26,8 @@ public class Item implements Serializable {
     private BigDecimal latitude;
     @ApiModelProperty(required = true, value = "Item location longitude", dataType = "double", example = "144.9631")
     private BigDecimal longitude;
+    @ApiModelProperty(required = true, value = "Image urls", dataType = "List")
+    private List<Image> urls;
     @JsonIgnore
     private Integer seller;
     private Integer status;
@@ -91,5 +94,17 @@ public class Item implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public List<Image> getUrls() {
+        return urls;
+    }
+
+    public void setUrls(List<Image> urls) {
+        this.urls = urls;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 }

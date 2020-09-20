@@ -10,6 +10,11 @@
     <result column="longitude" jdbcType="DECIMAL" property="longitude" />
     <result column="seller" jdbcType="INTEGER" property="seller" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <collection property="urls" ofType="group.unimeb.market.model.Image">
+      <id column="imid" jdbcType="INTEGER" property="imid" />
+      <result column="url" property="url" jdbcType="VARCHAR"/>
+    </collection>
   </resultMap>
   <resultMap id="DetailResultMap" type="group.unimeb.market.model.DetailItem">
     <id column="item_id" jdbcType="INTEGER" property="itemId" />
@@ -36,19 +41,15 @@
     </collection>
   </resultMap>
 
-  <sql id="Base_Column_List">
-    item_id, title, description, price, latitude, longitude, seller, `status`
-  </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    select *
     from item
     where item_id = #{itemId,jdbcType=INTEGER}
   </select>
   <select id="selectWishlistByUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
+    select *
     from item
+    left join image on item.item_id = image.item
     join wish_list on wish_list.item = item.item_id
     join `user` on `user`.uid = wish_list.user
     where `user`.uid = #{uid,jdbcType=INTEGER}
@@ -153,14 +154,13 @@
     where item_id = #{itemId,jdbcType=INTEGER}
   </update>
   <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from item
+    select *
+    from item left join image on item.item_id = image.item
   </select>
   <select id="selectByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
+    select *
         from `item`
+        left join image on item.item_id = image.item
         left join `item_category` on `item`.`item_id` = `item_category`.`item`
         left join `category` on `category`.`cid` = `item_category`.cid
         where `category`.`cid` = #{category,jdbcType=INTEGER}

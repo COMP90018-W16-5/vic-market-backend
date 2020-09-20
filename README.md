@@ -1,6 +1,7 @@
 # Vic Market - Backend
 ## Dependency
-### Maven
+- Maven
+
 https://maven.apache.org/
 ## Package and run
 ``` bash
