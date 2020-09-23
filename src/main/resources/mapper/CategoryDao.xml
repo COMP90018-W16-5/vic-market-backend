@@ -1,50 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group.unimeb.market.dao.CategoryDao">
-  <resultMap id="BaseResultMap" type="group.unimeb.market.model.Category">
-    <id column="cid" jdbcType="INTEGER" property="cid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="group.unimeb.market.model.Category">
+        <id column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     cid, `name`
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from category
-    where cid = #{cid,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from category
+        where cid = #{cid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from category
     where cid = #{cid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="cid" keyProperty="cid" parameterType="group.unimeb.market.model.Category" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="cid" keyProperty="cid" parameterType="group.unimeb.market.model.Category"
+            useGeneratedKeys="true">
     insert into category (`name`)
     values (#{name,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="cid" keyProperty="cid" parameterType="group.unimeb.market.model.Category" useGeneratedKeys="true">
-    insert into category
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        `name`,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="group.unimeb.market.model.Category">
-    update category
-    <set>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where cid = #{cid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="group.unimeb.market.model.Category">
+    <insert id="insertSelective" keyColumn="cid" keyProperty="cid" parameterType="group.unimeb.market.model.Category"
+            useGeneratedKeys="true">
+        insert into category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="group.unimeb.market.model.Category">
+        update category
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where cid = #{cid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="group.unimeb.market.model.Category">
     update category
     set `name` = #{name,jdbcType=VARCHAR}
     where cid = #{cid,jdbcType=INTEGER}

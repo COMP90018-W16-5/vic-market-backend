@@ -22,6 +22,8 @@ public interface ItemDao {
 
     List<Item> selectAll();
 
+    List<Item> selectSearch(String keyword);
+
     List<Item> selectWishlistByUser(Integer uid);
 
     List<Item> selectByCategory(int category);

@@ -2,26 +2,14 @@ package group.unimeb.market.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
-import group.unimeb.market.dao.ImageDao;
 import group.unimeb.market.dao.ItemDao;
 import group.unimeb.market.dao.WishListDao;
-import group.unimeb.market.model.*;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import group.unimeb.market.model.Item;
+import group.unimeb.market.model.PageResponseInfo;
+import group.unimeb.market.model.WishList;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**

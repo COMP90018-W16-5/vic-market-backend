@@ -20,10 +20,10 @@ public class AuthController {
     @ApiOperation("User sign up")
     @PostMapping(value = "/signup", produces = "application/json")
     public ResponseInfo<?> registerUser(@RequestParam String email,
-                                     @RequestParam String password,
-                                     @RequestParam String displayName,
-                                     @RequestParam String phone,
-                                     @RequestParam String photo) {
+                                        @RequestParam String password,
+                                        @RequestParam String displayName,
+                                        @RequestParam String phone,
+                                        @RequestParam String photo) {
         userService.signUpUser(email, password, displayName, phone, photo);
         return ResponseInfo.buildSuccess();
     }

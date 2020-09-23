@@ -3,8 +3,6 @@ package group.unimeb.market.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
-
 public class Image {
     @ApiModelProperty(required = true, value = "Image id", dataType = "int", example = "1")
     private Integer imid;

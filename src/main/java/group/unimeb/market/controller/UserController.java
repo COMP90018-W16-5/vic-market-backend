@@ -27,7 +27,7 @@ public class UserController {
 
     @ApiOperation("Post a item")
     @PostMapping(value = "/post", produces = "application/json")
-    public ResponseInfo<?> postItem(@RequestBody @ApiParam(value = "Created a post", required = true)ItemDTO item) {
+    public ResponseInfo<?> postItem(@RequestBody @ApiParam(value = "Created a post", required = true) ItemDTO item) {
         User user = userService.getCurrentUser();
         itemService.createItem(user, item);
         return ResponseInfo.buildSuccess();
@@ -54,7 +54,7 @@ public class UserController {
     @ApiOperation("Get wishlist")
     @GetMapping(value = "/wishlist", produces = MediaType.APPLICATION_JSON_VALUE)
     public PageResponseInfo<List<Item>> getWishlist(@ApiParam(value = "Page number", required = true) @RequestParam Integer page,
-                                    @ApiParam(value = "Number of item per page", required = true) @RequestParam Integer pageSize) {
+                                                    @ApiParam(value = "Number of item per page", required = true) @RequestParam Integer pageSize) {
         User user = userService.getCurrentUser();
         return wishlistService.getWishlist(page, pageSize, user.getUid());
     }

@@ -32,6 +32,10 @@ public class Item implements Serializable {
     private Integer seller;
     private Integer status;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public Integer getItemId() {
         return itemId;
     }
@@ -102,9 +106,5 @@ public class Item implements Serializable {
 
     public void setUrls(List<Image> urls) {
         this.urls = urls;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 }

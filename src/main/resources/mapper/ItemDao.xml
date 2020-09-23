@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group.unimeb.market.dao.ItemDao">
-  <resultMap id="BaseResultMap" type="group.unimeb.market.model.Item">
-    <id column="item_id" jdbcType="INTEGER" property="itemId" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="price" jdbcType="DOUBLE" property="price" />
-    <result column="latitude" jdbcType="DECIMAL" property="latitude" />
-    <result column="longitude" jdbcType="DECIMAL" property="longitude" />
-    <result column="seller" jdbcType="INTEGER" property="seller" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="image" jdbcType="VARCHAR" property="image" />
-    <collection property="urls" ofType="group.unimeb.market.model.Image">
-      <id column="imid" jdbcType="INTEGER" property="imid" />
-      <result column="url" property="url" jdbcType="VARCHAR"/>
-    </collection>
-  </resultMap>
-  <resultMap id="DetailResultMap" type="group.unimeb.market.model.DetailItem">
-    <id column="item_id" jdbcType="INTEGER" property="itemId" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="price" jdbcType="DOUBLE" property="price" />
-    <result column="latitude" jdbcType="DECIMAL" property="latitude" />
-    <result column="longitude" jdbcType="DECIMAL" property="longitude" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <association property="seller" javaType="group.unimeb.market.model.User">
-      <id column="uid" jdbcType="INTEGER" property="uid" />
-      <result column="email" jdbcType="VARCHAR" property="email" />
-      <result column="display_name" jdbcType="VARCHAR" property="displayName" />
-      <result column="phone" jdbcType="VARCHAR" property="phone" />
-      <result column="photo" jdbcType="VARCHAR" property="photo" />
-    </association>
-    <collection property="urls" ofType="group.unimeb.market.model.Image">
-      <id column="imid" jdbcType="INTEGER" property="imid" />
-      <result column="url" property="url" jdbcType="VARCHAR"/>
-    </collection>
-    <collection property="categories" ofType="group.unimeb.market.model.Category">
-      <id column="cid" jdbcType="INTEGER" property="cid" />
-      <result column="name" jdbcType="VARCHAR" property="name" />
-    </collection>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="group.unimeb.market.model.Item">
+        <id column="item_id" jdbcType="INTEGER" property="itemId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="latitude" jdbcType="DECIMAL" property="latitude"/>
+        <result column="longitude" jdbcType="DECIMAL" property="longitude"/>
+        <result column="seller" jdbcType="INTEGER" property="seller"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="image" jdbcType="VARCHAR" property="image"/>
+        <collection property="urls" ofType="group.unimeb.market.model.Image">
+            <id column="imid" jdbcType="INTEGER" property="imid"/>
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <resultMap id="DetailResultMap" type="group.unimeb.market.model.DetailItem">
+        <id column="item_id" jdbcType="INTEGER" property="itemId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="latitude" jdbcType="DECIMAL" property="latitude"/>
+        <result column="longitude" jdbcType="DECIMAL" property="longitude"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <association property="seller" javaType="group.unimeb.market.model.User">
+            <id column="uid" jdbcType="INTEGER" property="uid"/>
+            <result column="email" jdbcType="VARCHAR" property="email"/>
+            <result column="display_name" jdbcType="VARCHAR" property="displayName"/>
+            <result column="phone" jdbcType="VARCHAR" property="phone"/>
+            <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        </association>
+        <collection property="urls" ofType="group.unimeb.market.model.Image">
+            <id column="imid" jdbcType="INTEGER" property="imid"/>
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="categories" ofType="group.unimeb.market.model.Category">
+            <id column="cid" jdbcType="INTEGER" property="cid"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+        </collection>
+    </resultMap>
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
     from item
     where item_id = #{itemId,jdbcType=INTEGER}
   </select>
-  <select id="selectWishlistByUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectWishlistByUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
     from item
     left join image on item.item_id = image.item
@@ -54,11 +54,12 @@
     join `user` on `user`.uid = wish_list.user
     where `user`.uid = #{uid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from item
     where item_id = #{itemId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="item_id" keyProperty="itemId" parameterType="group.unimeb.market.model.Item" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="item_id" keyProperty="itemId" parameterType="group.unimeb.market.model.Item"
+            useGeneratedKeys="true">
     insert into item (title, description, price, 
       latitude, longitude, seller, 
       `status`)
@@ -66,83 +67,84 @@
       #{latitude,jdbcType=DECIMAL}, #{longitude,jdbcType=DECIMAL}, #{seller,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" keyColumn="item_id" keyProperty="itemId" parameterType="group.unimeb.market.model.Item" useGeneratedKeys="true">
-    insert into item
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        title,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="price != null">
-        price,
-      </if>
-      <if test="latitude != null">
-        latitude,
-      </if>
-      <if test="longitude != null">
-        longitude,
-      </if>
-      <if test="seller != null">
-        seller,
-      </if>
-      <if test="status != null">
-        `status`,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null">
-        #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="latitude != null">
-        #{latitude,jdbcType=DECIMAL},
-      </if>
-      <if test="longitude != null">
-        #{longitude,jdbcType=DECIMAL},
-      </if>
-      <if test="seller != null">
-        #{seller,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="group.unimeb.market.model.Item">
-    update item
-    <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null">
-        price = #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="latitude != null">
-        latitude = #{latitude,jdbcType=DECIMAL},
-      </if>
-      <if test="longitude != null">
-        longitude = #{longitude,jdbcType=DECIMAL},
-      </if>
-      <if test="seller != null">
-        seller = #{seller,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=INTEGER},
-      </if>
-    </set>
-    where item_id = #{itemId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="group.unimeb.market.model.Item">
+    <insert id="insertSelective" keyColumn="item_id" keyProperty="itemId" parameterType="group.unimeb.market.model.Item"
+            useGeneratedKeys="true">
+        insert into item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                title,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="seller != null">
+                seller,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=DECIMAL},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=DECIMAL},
+            </if>
+            <if test="seller != null">
+                #{seller,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="group.unimeb.market.model.Item">
+        update item
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=DECIMAL},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=DECIMAL},
+            </if>
+            <if test="seller != null">
+                seller = #{seller,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where item_id = #{itemId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="group.unimeb.market.model.Item">
     update item
     set title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
@@ -153,11 +155,17 @@
       `status` = #{status,jdbcType=INTEGER}
     where item_id = #{itemId,jdbcType=INTEGER}
   </update>
-  <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
     select *
     from item left join image on item.item_id = image.item
   </select>
-  <select id="selectByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectSearch" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from item left join image on item.item_id = image.item
+    where item.title like #{keyword}
+  </select>
+
+    <select id="selectByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
         from `item`
         left join image on item.item_id = image.item
@@ -165,7 +173,7 @@
         left join `category` on `category`.`cid` = `item_category`.cid
         where `category`.`cid` = #{category,jdbcType=INTEGER}
   </select>
-  <select id="selectDetailItem" parameterType="java.lang.Integer" resultMap="DetailResultMap">
+    <select id="selectDetailItem" parameterType="java.lang.Integer" resultMap="DetailResultMap">
     select * from item
       left join `user` on item.seller = `user`.`uid`
       left join `image` on item.item_id = image.item

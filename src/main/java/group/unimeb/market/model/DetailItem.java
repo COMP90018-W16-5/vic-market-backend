@@ -1,6 +1,5 @@
 package group.unimeb.market.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;

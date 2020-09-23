@@ -2,8 +2,6 @@ package group.unimeb.market.model;
 
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
-
 /**
  * category
  *
