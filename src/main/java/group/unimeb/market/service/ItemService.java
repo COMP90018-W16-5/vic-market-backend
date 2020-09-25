@@ -3,6 +3,7 @@ package group.unimeb.market.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
+import group.unimeb.market.dao.CategoryDao;
 import group.unimeb.market.dao.ImageDao;
 import group.unimeb.market.dao.ItemCategoryDao;
 import group.unimeb.market.dao.ItemDao;
@@ -36,6 +37,8 @@ public class ItemService {
     private ImageDao imageDao;
     @Resource
     private ItemCategoryDao itemCategoryDao;
+    @Resource
+    private CategoryDao categoryDao;
 
     public PageResponseInfo<List<Item>> getItemList(Integer page, Integer pageSize, Integer category) {
         if (page == null) {
@@ -126,5 +129,9 @@ public class ItemService {
 
     public DetailItem getItemDetail(Integer itemId) {
         return itemDao.selectDetailItem(itemId);
+    }
+
+    public List<Category> getAllCategories() {
+        return categoryDao.selectAll();
     }
 }

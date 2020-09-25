@@ -1,9 +1,6 @@
 package group.unimeb.market.controller;
 
-import group.unimeb.market.model.DetailItem;
-import group.unimeb.market.model.Item;
-import group.unimeb.market.model.PageResponseInfo;
-import group.unimeb.market.model.ResponseInfo;
+import group.unimeb.market.model.*;
 import group.unimeb.market.service.ItemService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -42,5 +39,11 @@ public class ItemController {
                                                    @ApiParam(value = "Page number", required = true) @RequestParam Integer page,
                                                    @ApiParam(value = "Number of item per page", required = true) @RequestParam Integer pageSize) {
         return itemService.getSearchItemList(keyword, page, pageSize);
+    }
+
+    @ApiOperation("Get all categories")
+    @GetMapping(value = "/categories", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseInfo<List<Category>> getAllCategories() {
+        return ResponseInfo.buildSuccess(itemService.getAllCategories());
     }
 }
