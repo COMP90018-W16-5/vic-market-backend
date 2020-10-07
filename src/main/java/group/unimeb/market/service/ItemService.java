@@ -3,6 +3,9 @@ package group.unimeb.market.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
+import com.spatial4j.core.context.SpatialContext;
+import com.spatial4j.core.distance.DistanceUtils;
+import com.spatial4j.core.shape.Rectangle;
 import group.unimeb.market.dao.CategoryDao;
 import group.unimeb.market.dao.ImageDao;
 import group.unimeb.market.dao.ItemCategoryDao;
@@ -22,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -54,6 +58,35 @@ public class ItemService {
         } else {
             result = itemDao.selectByCategory(category);
         }
+        PageInfo<Item> pageInfo = new PageInfo<>(result);
+        PageResponseInfo<List<Item>> responseInfo = PageResponseInfo.buildSuccess(result);
+        responseInfo.setPage(pageInfo.getPageNum());
+        responseInfo.setHasNext(pageInfo.isHasNextPage());
+        responseInfo.setHasPrevious(pageInfo.isHasPreviousPage());
+        return responseInfo;
+    }
+
+    public PageResponseInfo<List<Item>> getItemListNearMe(Integer page,
+                                                          Integer pageSize,
+                                                          Integer category,
+                                                          Integer distance,
+                                                          BigDecimal latitude,
+                                                          BigDecimal longitude) {
+        if (page == null) {
+            page = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 10;
+        }
+        PageHelper.startPage(page, pageSize);
+        Rectangle rectangle = getRectangle(distance, longitude.doubleValue(), latitude.doubleValue());
+        BigDecimal minLongitude = BigDecimal.valueOf(rectangle.getMinX());
+        BigDecimal maxLongitude = BigDecimal.valueOf(rectangle.getMaxX());
+        BigDecimal minLatitude = BigDecimal.valueOf(rectangle.getMinY());
+        BigDecimal maxLatitude = BigDecimal.valueOf(rectangle.getMaxY());
+        System.out.println(minLongitude + " " + maxLongitude);
+        System.out.println(minLatitude + " " + maxLatitude);
+        List<Item> result = itemDao.selectNearMe(minLatitude, maxLatitude, minLongitude, maxLongitude, category);
         PageInfo<Item> pageInfo = new PageInfo<>(result);
         PageResponseInfo<List<Item>> responseInfo = PageResponseInfo.buildSuccess(result);
         responseInfo.setPage(pageInfo.getPageNum());
@@ -133,5 +166,12 @@ public class ItemService {
 
     public List<Category> getAllCategories() {
         return categoryDao.selectAll();
+    }
+
+    private Rectangle getRectangle(double distance, double longitude, double latitude) {
+        SpatialContext spatialContext = SpatialContext.GEO;
+        return spatialContext.getDistCalc()
+                .calcBoxByDistFromPt(spatialContext.makePoint(longitude, latitude),
+                        distance * DistanceUtils.KM_TO_DEG, spatialContext, null);
     }
 }

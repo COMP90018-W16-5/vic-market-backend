@@ -3,7 +3,9 @@ package group.unimeb.market.dao;
 import group.unimeb.market.model.DetailItem;
 import group.unimeb.market.model.Item;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Mapper
@@ -26,7 +28,13 @@ public interface ItemDao {
 
     List<Item> selectWishlistByUser(Integer uid);
 
-    List<Item> selectByCategory(int category);
+    List<Item> selectByCategory(Integer category);
 
     DetailItem selectDetailItem(Integer itemId);
+
+    List<Item> selectNearMe(@Param("minLatitude") BigDecimal minLatitude,
+                            @Param("maxLatitude") BigDecimal maxLatitude,
+                            @Param("minLongitude") BigDecimal minLongitude,
+                            @Param("maxLongitude") BigDecimal maxLongitude,
+                            @Param("category") Integer category);
 }

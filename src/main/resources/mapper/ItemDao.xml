@@ -164,14 +164,26 @@
     from item left join image on item.item_id = image.item
     where item.title like #{keyword}
   </select>
-
-    <select id="selectByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
         from `item`
         left join image on item.item_id = image.item
         left join `item_category` on `item`.`item_id` = `item_category`.`item`
         left join `category` on `category`.`cid` = `item_category`.cid
         where `category`.`cid` = #{category,jdbcType=INTEGER}
+  </select>
+  <select id="selectNearMe" resultMap="BaseResultMap">
+        select *
+        from `item`
+        left join image on item.item_id = image.item
+        left join `item_category` on `item`.`item_id` = `item_category`.`item`
+        left join `category` on `category`.`cid` = `item_category`.cid
+        where 1 = 1
+        and (`item`.`longitude` BETWEEN ${minLongitude} AND ${maxLongitude})
+        and (`item`.`latitude` BETWEEN ${minLatitude} AND ${maxLatitude})
+        <if test="category != null and category > 0">
+            and `category`.`cid` = #{category}
+        </if>
   </select>
     <select id="selectDetailItem" parameterType="java.lang.Integer" resultMap="DetailResultMap">
     select * from item

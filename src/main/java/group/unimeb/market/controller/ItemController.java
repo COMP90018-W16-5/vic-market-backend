@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,17 @@ public class ItemController {
                                                  @ApiParam(value = "Number of item per page", required = true) @RequestParam Integer pageSize,
                                                  @ApiParam(value = "Filter by category. Null for all categories", required = false) @RequestParam(required = false) Integer category) {
         return itemService.getItemList(page, pageSize, category);
+    }
+
+    @ApiOperation("Get item list near to me")
+    @GetMapping(value = "/nearby", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PageResponseInfo<List<Item>> getItemsNearBy(@ApiParam(value = "Page number", required = true) @RequestParam Integer page,
+                                                 @ApiParam(value = "Number of item per page", required = true) @RequestParam Integer pageSize,
+                                                 @ApiParam(value = "Latitude", required = true) @RequestParam BigDecimal latitude,
+                                                 @ApiParam(value = "Longitude", required = true) @RequestParam BigDecimal longitude,
+                                                 @ApiParam(value = "Max distance (km)", required = true) @RequestParam Integer maxDistance,
+                                                 @ApiParam(value = "Filter by category. Null for all categories", required = false) @RequestParam(required = false) Integer category) {
+        return itemService.getItemListNearMe(page, pageSize, category, maxDistance, latitude, longitude);
     }
 
     @ApiOperation("Get item detail")
