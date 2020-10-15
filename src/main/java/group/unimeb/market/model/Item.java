@@ -22,6 +22,8 @@ public class Item implements Serializable {
     private String description;
     @ApiModelProperty(required = true, value = "Item price", dataType = "double", example = "20.20")
     private Double price;
+    @ApiModelProperty(required = true, value = "Item poster address", dataType = "String", example = "Parkville VIC 3010")
+    private String Address;
     @ApiModelProperty(required = true, value = "Item location latitude", dataType = "double", example = "37.8136")
     private BigDecimal latitude;
     @ApiModelProperty(required = true, value = "Item location longitude", dataType = "double", example = "144.9631")
@@ -68,6 +70,14 @@ public class Item implements Serializable {
         this.price = price;
     }
 
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
     public BigDecimal getLatitude() {
         return latitude;
     }
@@ -84,6 +94,14 @@ public class Item implements Serializable {
         this.longitude = longitude;
     }
 
+    public List<Image> getUrls() {
+        return urls;
+    }
+
+    public void setUrls(List<Image> urls) {
+        this.urls = urls;
+    }
+
     public Integer getSeller() {
         return seller;
     }
@@ -98,13 +116,5 @@ public class Item implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public List<Image> getUrls() {
-        return urls;
-    }
-
-    public void setUrls(List<Image> urls) {
-        this.urls = urls;
     }
 }

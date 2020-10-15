@@ -6,11 +6,12 @@
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="latitude" jdbcType="DECIMAL" property="latitude"/>
         <result column="longitude" jdbcType="DECIMAL" property="longitude"/>
         <result column="seller" jdbcType="INTEGER" property="seller"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
-        <result column="image" jdbcType="VARCHAR" property="image"/>
+<!--        <result column="image" jdbcType="VARCHAR" property="image"/>-->
         <collection property="urls" ofType="group.unimeb.market.model.Image">
             <id column="imid" jdbcType="INTEGER" property="imid"/>
             <result column="url" property="url" jdbcType="VARCHAR"/>
@@ -21,6 +22,7 @@
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="latitude" jdbcType="DECIMAL" property="latitude"/>
         <result column="longitude" jdbcType="DECIMAL" property="longitude"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
@@ -60,10 +62,10 @@
   </delete>
     <insert id="insert" keyColumn="item_id" keyProperty="itemId" parameterType="group.unimeb.market.model.Item"
             useGeneratedKeys="true">
-    insert into item (title, description, price, 
+    insert into item (title, description, price, address
       latitude, longitude, seller, 
       `status`)
-    values (#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
+    values (#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{address,jdbcType=VARCHAR},
       #{latitude,jdbcType=DECIMAL}, #{longitude,jdbcType=DECIMAL}, #{seller,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER})
   </insert>
@@ -79,6 +81,9 @@
             </if>
             <if test="price != null">
                 price,
+            </if>
+            <if test="address != null">
+                address,
             </if>
             <if test="latitude != null">
                 latitude,
@@ -102,6 +107,9 @@
             </if>
             <if test="price != null">
                 #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
             </if>
             <if test="latitude != null">
                 #{latitude,jdbcType=DECIMAL},
@@ -129,6 +137,9 @@
             <if test="price != null">
                 price = #{price,jdbcType=DOUBLE},
             </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
             <if test="latitude != null">
                 latitude = #{latitude,jdbcType=DECIMAL},
             </if>
@@ -149,6 +160,7 @@
     set title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       price = #{price,jdbcType=DOUBLE},
+      address = #{address,jdbcType=VARCHAR},
       latitude = #{latitude,jdbcType=DECIMAL},
       longitude = #{longitude,jdbcType=DECIMAL},
       seller = #{seller,jdbcType=INTEGER},

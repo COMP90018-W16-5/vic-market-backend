@@ -14,6 +14,8 @@ public class DetailItem {
     private String description;
     @ApiModelProperty(required = true, value = "Item price", dataType = "double", example = "20.20")
     private Double price;
+    @ApiModelProperty(required = true, value = "Item poster address", dataType = "String", example = "Parkville VIC 3010")
+    private String Address;
     @ApiModelProperty(required = true, value = "Item location latitude", dataType = "double", example = "37.8136")
     private BigDecimal latitude;
     @ApiModelProperty(required = true, value = "Item location longitude", dataType = "double", example = "144.9631")
@@ -56,6 +58,14 @@ public class DetailItem {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
     }
 
     public BigDecimal getLatitude() {
