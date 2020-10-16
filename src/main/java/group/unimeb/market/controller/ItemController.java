@@ -72,4 +72,10 @@ public class ItemController {
         }
         return ResponseInfo.buildSuccess(result);
     }
+
+    @ApiOperation("Get random item detail")
+    @GetMapping(value = "/random", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseInfo<DetailItem> getRandom() {
+        return ResponseInfo.buildSuccess(itemService.getRandomItem());
+    }
 }

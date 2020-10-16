@@ -27,7 +27,9 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Yangzhe Xie
@@ -43,6 +45,9 @@ public class ItemService {
     private ItemCategoryDao itemCategoryDao;
     @Resource
     private CategoryDao categoryDao;
+
+    private List<Integer> allItemId = new ArrayList<>();
+    private long lastGetItemIdTime = 0;
 
     public PageResponseInfo<List<Item>> getItemList(Integer page, Integer pageSize, Integer category) {
         if (page == null) {
@@ -173,5 +178,14 @@ public class ItemService {
         return spatialContext.getDistCalc()
                 .calcBoxByDistFromPt(spatialContext.makePoint(longitude, latitude),
                         distance * DistanceUtils.KM_TO_DEG, spatialContext, null);
+    }
+
+    public DetailItem getRandomItem() {
+        if (allItemId.isEmpty() ||
+                System.currentTimeMillis() - lastGetItemIdTime > 5 * 60 * 1000) {
+            allItemId = itemDao.selectAllItemId();
+        }
+        int randomIndex = (int)(Math.random() * allItemId.size());
+        return getItemDetail(randomIndex);
     }
 }

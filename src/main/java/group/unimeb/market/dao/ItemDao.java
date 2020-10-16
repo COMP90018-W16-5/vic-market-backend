@@ -37,4 +37,6 @@ public interface ItemDao {
                             @Param("minLongitude") BigDecimal minLongitude,
                             @Param("maxLongitude") BigDecimal maxLongitude,
                             @Param("category") Integer category);
+
+    List<Integer> selectAllItemId();
 }
