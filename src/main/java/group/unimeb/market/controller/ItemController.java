@@ -5,13 +5,12 @@ import group.unimeb.market.service.ItemService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -57,5 +56,20 @@ public class ItemController {
     @GetMapping(value = "/categories", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseInfo<List<Category>> getAllCategories() {
         return ResponseInfo.buildSuccess(itemService.getAllCategories());
+    }
+
+    @ApiOperation(value = "Upload images")
+    @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseInfo<List<ImageUrlModel>> uploadImage(@RequestPart("images") MultipartFile[] images) {
+        List<ImageUrlModel> result = new ArrayList<>();
+        int seq = 0;
+        for (MultipartFile image : images) {
+            String url = itemService.uploadFile(image);
+            if (url == null || "".equals(url)) {
+                continue;
+            }
+            result.add(new ImageUrlModel(++seq, url));
+        }
+        return ResponseInfo.buildSuccess(result);
     }
 }
