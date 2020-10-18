@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @author Yangzhe Xie
@@ -92,6 +93,10 @@ public class ItemService {
         System.out.println(minLongitude + " " + maxLongitude);
         System.out.println(minLatitude + " " + maxLatitude);
         List<Item> result = itemDao.selectNearMe(minLatitude, maxLatitude, minLongitude, maxLongitude, category);
+        result = result.stream()
+                .filter(a -> getDistance(a.getLongitude().doubleValue(), a.getLatitude().doubleValue(),
+                        longitude.doubleValue(), latitude.doubleValue()) <= distance)
+                .collect(Collectors.toList());
         PageInfo<Item> pageInfo = new PageInfo<>(result);
         PageResponseInfo<List<Item>> responseInfo = PageResponseInfo.buildSuccess(result);
         responseInfo.setPage(pageInfo.getPageNum());
@@ -168,6 +173,7 @@ public class ItemService {
                         distance * DistanceUtils.KM_TO_DEG, spatialContext, null);
     }
 
+
     public DetailItem getRandomItem() {
         if (allItemId.isEmpty() ||
                 System.currentTimeMillis() - lastGetItemIdTime > 5 * 60 * 1000) {
@@ -175,5 +181,21 @@ public class ItemService {
         }
         int randomIndex = (int)(Math.random() * allItemId.size());
         return getItemDetail(randomIndex);
+    }
+
+    private static final  double EARTH_RADIUS = 6378137;
+
+    private double rad(double d){
+        return d * Math.PI / 180.0;
+    }
+
+    public double getDistance(double lon1,double lat1,double lon2, double lat2) {
+        double radLat1 = rad(lat1);
+        double radLat2 = rad(lat2);
+        double a = radLat1 - radLat2;
+        double b = rad(lon1) - rad(lon2);
+        double s = 2 *Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2)+Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));
+        s = s * EARTH_RADIUS;
+        return s / 1000;
     }
 }
