@@ -62,7 +62,7 @@
   </delete>
     <insert id="insert" keyColumn="item_id" keyProperty="itemId" parameterType="group.unimeb.market.model.Item"
             useGeneratedKeys="true">
-    insert into item (title, description, price, address
+    insert into item (title, description, price, address,
       latitude, longitude, seller, 
       `status`)
     values (#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{address,jdbcType=VARCHAR},
