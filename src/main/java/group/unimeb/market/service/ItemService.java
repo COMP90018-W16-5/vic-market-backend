@@ -146,23 +146,11 @@ public class ItemService {
         return null;
     }
 
-    public void createItem(User user, ItemDTO item) {
-        Item newItem = new Item();
-        newItem.setTitle(item.getTitle());
-        newItem.setDescription(item.getDescription());
-        newItem.setLatitude(item.getLatitude());
-        newItem.setLongitude(item.getLongitude());
-        newItem.setPrice(item.getPrice());
-        newItem.setSeller(user.getUid());
-        newItem.setStatus(0);
+    public void createItem(Item newItem, String image, int category) {
         itemDao.insert(newItem);
-        for (String url : item.getImages()) {
-            imageDao.insert(new Image(newItem.getItemId(), url));
-        }
-        for (Integer category : item.getCategories()) {
-            ItemCategory itemCategory = new ItemCategory(null, newItem.getItemId(), category);
-            itemCategoryDao.insert(itemCategory);
-        }
+        imageDao.insert(new Image(newItem.getItemId(), image));
+        ItemCategory itemCategory = new ItemCategory(null, newItem.getItemId(), category);
+        itemCategoryDao.insert(itemCategory);
     }
 
     public DetailItem getItemDetail(Integer itemId) {
