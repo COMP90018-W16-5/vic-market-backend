@@ -179,8 +179,16 @@ public class ItemService {
                 System.currentTimeMillis() - lastGetItemIdTime > 5 * 60 * 1000) {
             allItemId = itemDao.selectAllItemId();
         }
+        lastGetItemIdTime = System.currentTimeMillis();
         int randomIndex = (int)(Math.random() * allItemId.size());
         return getItemDetail(randomIndex);
+    }
+
+    public void deleteItem(int itemId, int userId) {
+        Item item = itemDao.selectByPrimaryKey(itemId);
+        if (item != null && item.getSeller() == userId) {
+            itemDao.deleteByPrimaryKey(itemId);
+        }
     }
 
     private static final  double EARTH_RADIUS = 6378137;

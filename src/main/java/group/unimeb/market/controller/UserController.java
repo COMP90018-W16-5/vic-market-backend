@@ -75,4 +75,12 @@ public class UserController {
         User user = userService.getCurrentUser();
         return wishlistService.getWishlist(page, pageSize, user.getUid());
     }
+
+    @ApiOperation("Delete published item")
+    @DeleteMapping(value = "/item", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseInfo<?> deleteItem(@ApiParam(value = "Item id", required = true) @RequestParam Integer itemId) {
+        User user = userService.getCurrentUser();
+        itemService.deleteItem(itemId, user.getUid());
+        return ResponseInfo.buildSuccess();
+    }
 }
