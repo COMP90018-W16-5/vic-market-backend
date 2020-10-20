@@ -122,6 +122,23 @@ public class ItemService {
         return responseInfo;
     }
 
+    public PageResponseInfo<List<Item>> getUserItemList(Integer uid, Integer page, Integer pageSize) {
+        if (page == null) {
+            page = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 10;
+        }
+        PageHelper.startPage(page, pageSize);
+        List<Item> result = itemDao.selectBySeller(uid);
+        PageInfo<Item> pageInfo = new PageInfo<>(result);
+        PageResponseInfo<List<Item>> responseInfo = PageResponseInfo.buildSuccess(result);
+        responseInfo.setPage(pageInfo.getPageNum());
+        responseInfo.setHasNext(pageInfo.isHasNextPage());
+        responseInfo.setHasPrevious(pageInfo.isHasPreviousPage());
+        return responseInfo;
+    }
+
     public String uploadFile(MultipartFile image) {
         String url = "https://img.xieyangzhe.com/api.php";
         CloseableHttpClient httpClient = HttpClients.createDefault();

@@ -171,6 +171,11 @@
     select *
     from item left join image on item.item_id = image.item order by item_id desc
   </select>
+    <select id="selectBySeller" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from item left join image on item.item_id = image.item
+    where item.seller = #{uid,jdbcType=INTEGER} order by item.item_id desc
+  </select>
     <select id="selectSearch" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from item left join image on item.item_id = image.item

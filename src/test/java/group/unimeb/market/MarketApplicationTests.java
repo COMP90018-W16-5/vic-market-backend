@@ -22,7 +22,7 @@ class MarketApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println(itemDao.selectAllItemId());
+//        System.out.println(itemDao.selectBySeller(10));
 //        System.out.println(new Gson().toJson(itemService.getSearchItemList("quad", 1, 10)));
 //        System.out.println(new Gson().toJson(categoryDao.selectAll()));
 //        System.out.println(new Gson().toJson(itemService.getItemListNearMe(1, 10, null, 20, new BigDecimal(23), new BigDecimal(123))));

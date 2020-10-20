@@ -30,6 +30,8 @@ public interface ItemDao {
 
     List<Item> selectByCategory(Integer category);
 
+    List<Item> selectBySeller(Integer uid);
+
     DetailItem selectDetailItem(Integer itemId);
 
     List<Item> selectNearMe(@Param("minLatitude") BigDecimal minLatitude,

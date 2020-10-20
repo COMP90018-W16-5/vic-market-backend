@@ -83,4 +83,12 @@ public class UserController {
         itemService.deleteItem(itemId, user.getUid());
         return ResponseInfo.buildSuccess();
     }
+
+    @ApiOperation("Get items posted by the current user")
+    @DeleteMapping(value = "/items", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PageResponseInfo<List<Item>> getItems(@ApiParam(value = "Page number", required = true) @RequestParam Integer page,
+                                                 @ApiParam(value = "Number of item per page", required = true) @RequestParam Integer pageSize) {
+        User user = userService.getCurrentUser();
+        return itemService.getUserItemList(user.getUid(), page, pageSize);
+    }
 }
