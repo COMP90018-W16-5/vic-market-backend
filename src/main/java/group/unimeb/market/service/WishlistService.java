@@ -24,11 +24,19 @@ public class WishlistService {
     private ItemDao itemDao;
 
     public void addWishlistItem(WishList wishList) {
-        wishListDao.insert(wishList);
+        try {
+            wishListDao.insert(wishList);
+        } catch (Exception e) {
+            // ignore
+        }
     }
 
     public void removeWishlistItem(WishList wishList) {
-        wishListDao.deleteWishlist(wishList);
+        try {
+            wishListDao.deleteWishlist(wishList);
+        } catch (Exception e) {
+            // ignore
+        }
     }
 
     public PageResponseInfo<List<Item>> getWishlist(Integer page, Integer pageSize, Integer uid) {

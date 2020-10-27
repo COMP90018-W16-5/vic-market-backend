@@ -177,7 +177,7 @@ public class ItemService {
     public DetailItem getItemDetail(Integer itemId, Integer user) {
         DetailItem item = itemDao.selectDetailItem(itemId);
         if (item != null) {
-            item.setLiked(wishListDao.selectByUserAndItem(user, itemId) == null);
+            item.setLiked(wishListDao.selectByUserAndItem(user, itemId) != null);
         }
         return item;
     }
