@@ -27,6 +27,8 @@ public class DetailItem {
     private List<Image> urls;
     @ApiModelProperty(required = true, value = "Image Categories", dataType = "List")
     private List<Category> categories;
+    @ApiModelProperty(required = true, value = "Liked", dataType = "boolean", example = "false")
+    private Boolean liked = false;
 
     public Integer getItemId() {
         return itemId;
@@ -114,5 +116,13 @@ public class DetailItem {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public Boolean getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Boolean liked) {
+        this.liked = liked;
     }
 }

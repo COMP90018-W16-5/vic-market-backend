@@ -3,6 +3,7 @@ package group.unimeb.market;
 import com.google.gson.Gson;
 import group.unimeb.market.dao.CategoryDao;
 import group.unimeb.market.dao.ItemDao;
+import group.unimeb.market.dao.WishListDao;
 import group.unimeb.market.service.ItemService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,9 +20,12 @@ class MarketApplicationTests {
     CategoryDao categoryDao;
     @Resource
     ItemDao itemDao;
+    @Resource
+    WishListDao wishListDao;
 
     @Test
     void contextLoads() {
+        System.out.println(new Gson().toJson(wishListDao.selectByUserAndItem(11, 1469)));
 //        System.out.println(itemDao.selectBySeller(10));
 //        System.out.println(new Gson().toJson(itemService.getSearchItemList("quad", 1, 10)));
 //        System.out.println(new Gson().toJson(categoryDao.selectAll()));

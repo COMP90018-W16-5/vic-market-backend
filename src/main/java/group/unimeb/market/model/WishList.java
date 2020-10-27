@@ -8,6 +8,15 @@ public class WishList implements Serializable {
     private Integer user;
     private Integer item;
 
+    public WishList() {
+    }
+
+    public WishList(Integer wlid, Integer user, Integer item) {
+        this.wlid = wlid;
+        this.user = user;
+        this.item = item;
+    }
+
     public WishList(Integer user, Integer item) {
         this.user = user;
         this.item = item;

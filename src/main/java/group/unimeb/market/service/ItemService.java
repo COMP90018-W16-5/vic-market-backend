@@ -6,10 +6,7 @@ import com.google.gson.Gson;
 import com.spatial4j.core.context.SpatialContext;
 import com.spatial4j.core.distance.DistanceUtils;
 import com.spatial4j.core.shape.Rectangle;
-import group.unimeb.market.dao.CategoryDao;
-import group.unimeb.market.dao.ImageDao;
-import group.unimeb.market.dao.ItemCategoryDao;
-import group.unimeb.market.dao.ItemDao;
+import group.unimeb.market.dao.*;
 import group.unimeb.market.model.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -46,6 +43,8 @@ public class ItemService {
     private ItemCategoryDao itemCategoryDao;
     @Resource
     private CategoryDao categoryDao;
+    @Resource
+    private WishListDao wishListDao;
 
     private List<Integer> allItemId = new ArrayList<>();
     private long lastGetItemIdTime = 0;
@@ -175,8 +174,12 @@ public class ItemService {
         itemCategoryDao.insert(itemCategory);
     }
 
-    public DetailItem getItemDetail(Integer itemId) {
-        return itemDao.selectDetailItem(itemId);
+    public DetailItem getItemDetail(Integer itemId, Integer user) {
+        DetailItem item = itemDao.selectDetailItem(itemId);
+        if (item != null) {
+            item.setLiked(wishListDao.selectByUserAndItem(user, itemId) == null);
+        }
+        return item;
     }
 
     public List<Category> getAllCategories() {
@@ -191,14 +194,14 @@ public class ItemService {
     }
 
 
-    public DetailItem getRandomItem() {
+    public DetailItem getRandomItem(int user) {
         if (allItemId.isEmpty() ||
                 System.currentTimeMillis() - lastGetItemIdTime > 5 * 60 * 1000) {
             allItemId = itemDao.selectAllItemId();
         }
         lastGetItemIdTime = System.currentTimeMillis();
         int randomIndex = (int)(Math.random() * allItemId.size());
-        return getItemDetail(randomIndex);
+        return getItemDetail(randomIndex, user);
     }
 
     public void deleteItem(int itemId, int userId) {
