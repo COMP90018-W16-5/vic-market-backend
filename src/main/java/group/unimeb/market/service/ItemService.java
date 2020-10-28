@@ -175,8 +175,9 @@ public class ItemService {
     }
 
     public DetailItem getItemDetail(Integer itemId, Integer user) {
+        System.out.println(itemId);
         DetailItem item = itemDao.selectDetailItem(itemId);
-        if (item != null) {
+        if (item != null && !user.equals(-1)) {
             item.setLiked(wishListDao.selectByUserAndItem(user, itemId) != null);
         }
         return item;
@@ -201,7 +202,7 @@ public class ItemService {
         }
         lastGetItemIdTime = System.currentTimeMillis();
         int randomIndex = (int)(Math.random() * allItemId.size());
-        return getItemDetail(randomIndex, user);
+        return getItemDetail(allItemId.get(randomIndex), user);
     }
 
     public void deleteItem(int itemId, int userId) {

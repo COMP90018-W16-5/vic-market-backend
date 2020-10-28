@@ -27,6 +27,7 @@ public class WishlistService {
         try {
             wishListDao.insert(wishList);
         } catch (Exception e) {
+            e.printStackTrace();
             // ignore
         }
     }
@@ -35,6 +36,7 @@ public class WishlistService {
         try {
             wishListDao.deleteWishlist(wishList);
         } catch (Exception e) {
+            e.printStackTrace();
             // ignore
         }
     }
